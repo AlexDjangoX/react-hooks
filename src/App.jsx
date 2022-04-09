@@ -5,35 +5,35 @@ import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
 
-        if (storedUserLoggedInInformation === "1") {
-            setIsLoggedIn(true);
-        }
-    }, []);
+    if (storedUserLoggedInInformation === "1") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-    const loginHandler = (email, password) => {
-        localStorage.setItem("isLoggedIn", "1");
-        setIsLoggedIn(true);
-    };
+  const onLogin = (email, password) => {
+    localStorage.setItem("isLoggedIn", "1");
+    setIsLoggedIn(true);
+  };
 
-    const logoutHandler = () => {
-        localStorage.removeItem("isLoggedIn");
-        setIsLoggedIn(false);
-    };
-
-    return (
-        <React.Fragment>
-           <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+  const onLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+  // props.isLoggedIn       props.onLogout
+  return (
+    <React.Fragment>
+      <MainHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>  
-        </React.Fragment>
-    )
-            }
+        {!isLoggedIn && <Login onLogin={onLogin} />}
+        {isLoggedIn && <Home onLogout={onLogout} />}
+      </main>
+    </React.Fragment>
+  );
+}
 
-            export default App;
+export default App;
